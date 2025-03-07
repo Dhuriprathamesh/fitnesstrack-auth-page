@@ -1,10 +1,12 @@
 
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import Background from '@/components/layout/Background';
 import AuthForm from '@/components/auth/AuthForm';
 import Logo from '@/components/ui-elements/Logo';
 import { Activity, TrendingUp, Heart, Trophy } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const FeatureItem = ({ icon, title, description }: { 
   icon: React.ReactNode, 
@@ -47,6 +49,13 @@ const Index = () => {
             <p className="text-xl text-muted-foreground">
               Your personal health companion for achieving your fitness goals.
             </p>
+            <div className="pt-4">
+              <Button asChild className="mt-4">
+                <Link to="/dashboard">
+                  View Dashboard Demo
+                </Link>
+              </Button>
+            </div>
           </div>
           
           <div className="grid md:grid-cols-2 gap-8 pt-4">
