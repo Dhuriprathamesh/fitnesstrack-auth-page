@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { 
   Activity, 
   BarChart4, 
+  Bell,
   Calendar, 
   Clock, 
   Dumbbell, 
@@ -17,6 +18,7 @@ import {
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import WorkoutList from '@/components/dashboard/WorkoutList';
 import ProgressChart from '@/components/dashboard/ProgressChart';
 import StatsCards from '@/components/dashboard/StatsCards';
@@ -32,10 +34,22 @@ const Dashboard = () => {
       <header className="border-b sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between py-4">
           <div className="flex items-center gap-2">
-            <Dumbbell className="h-6 w-6 text-fitness-500" />
+            <Dumbbell className="h-6 w-6 text-primary" />
             <h1 className="text-xl font-bold">FitTrack</h1>
           </div>
           <div className="flex items-center gap-4">
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/notifications" className="gap-1 relative">
+                <Bell className="h-4 w-4" />
+                <span>Notifications</span>
+                <Badge 
+                  className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center" 
+                  variant="destructive"
+                >
+                  3
+                </Badge>
+              </Link>
+            </Button>
             <Button variant="ghost" size="sm" asChild>
               <Link to="/" className="gap-1">
                 <User className="h-4 w-4" />
