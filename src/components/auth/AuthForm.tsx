@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import FormField from './FormField';
+import ProfileInfoInput from './ProfileInfoInput';
 import { Mail, Lock, User, ArrowRight } from 'lucide-react';
 
 interface AuthFormProps {
@@ -18,12 +19,14 @@ interface FormState {
   email: string;
   password: string;
   name?: string;
+  fitnessGoal: string;
 }
 
 interface FormErrors {
   email?: string;
   password?: string;
   name?: string;
+  fitnessGoal?: string;
 }
 
 const AuthForm: React.FC<AuthFormProps> = ({ className }) => {
@@ -33,6 +36,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ className }) => {
     email: '',
     password: '',
     name: '',
+    fitnessGoal: '',
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const { toast } = useToast();
@@ -54,6 +58,10 @@ const AuthForm: React.FC<AuthFormProps> = ({ className }) => {
     
     if (formMode === 'signup' && !formState.name) {
       newErrors.name = 'Name is required';
+    }
+    
+    if (formMode === 'signup' && !formState.fitnessGoal) {
+      newErrors.fitnessGoal = 'Please share your fitness goal';
     }
     
     setErrors(newErrors);
@@ -81,11 +89,15 @@ const AuthForm: React.FC<AuthFormProps> = ({ className }) => {
       // Simulate API call with a timeout
       await new Promise((resolve) => setTimeout(resolve, 1500));
       
+      const message = formMode === 'signin' 
+        ? 'Welcome back!' 
+        : `Account created! Goal: ${formState.fitnessGoal}`;
+      
       toast({
         title: formMode === 'signin' ? 'Welcome back!' : 'Account created!',
         description: formMode === 'signin' 
           ? 'You have successfully signed in.' 
-          : 'Your account has been created successfully.',
+          : `Your account has been created successfully. We'll help you achieve: ${formState.fitnessGoal}`,
       });
       
       // Here we would typically redirect the user or update UI
@@ -137,6 +149,17 @@ const AuthForm: React.FC<AuthFormProps> = ({ className }) => {
                 value={formState.name || ''}
                 onChange={handleChange}
                 error={errors.name}
+              />
+              
+              <ProfileInfoInput
+                fitnessGoal={formState.fitnessGoal}
+                setFitnessGoal={(value) => {
+                  setFormState(prev => ({ ...prev, fitnessGoal: value }));
+                  if (errors.fitnessGoal) {
+                    setErrors(prev => ({ ...prev, fitnessGoal: undefined }));
+                  }
+                }}
+                error={errors.fitnessGoal}
               />
             </TabsContent>
             
